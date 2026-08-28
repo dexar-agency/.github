@@ -1,0 +1,24 @@
+# Guardia anti-credenziali di Dexar — gira su ogni PR e su dev/main.
+# gitleaks in versione CLI pinnata con checksum (la action ufficiale
+# richiede license key sulle organizzazioni). Status check obbligatorio.
+name: guardia-credenziali
+on:
+  pull_request:
+  push:
+    branches: [dev, main]
+permissions:
+  contents: read
+jobs:
+  gitleaks:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+      - name: Scansione credenziali (gitleaks 8.30.1, checksum verificato)
+        run: |
+          curl -sSfL -o gl.tgz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  gl.tgz" | sha256sum -c -
+          tar -xzf gl.tgz gitleaks
+          ./gitleaks git . --redact --no-banner --exit-code 1
