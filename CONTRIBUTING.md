@@ -7,11 +7,13 @@ Regole essenziali, valide in tutti i repository dell'organizzazione:
    lo chiede e che impatto ha.
 2. **Mai lavorare su `main` o su `dev`.** Si lavora su un branch dedicato,
    il cui nome dice il lavoro (es. `fix/form-contatti-validazione`).
+   (Chi ha la responsabilità dei rilasci ha una corsia propria, descritta
+   nel repository `governance`.)
 3. **Il branch torna con una pull request verso `dev`**, con `Closes #N`
    nella descrizione. La pipeline deve essere verde; la PR viene mergiata
    in squash dopo la review.
 4. **La promozione `dev` → `main` è un atto separato**, riservato a chi ha
-   la responsabilità del rilascio.
+   la responsabilità del rilascio; `dev` e `main` restano identici.
 5. **Mai credenziali nel codice** — nemmeno in file di appoggio o di
    backup. Un controllo automatico blocca le PR che ne contengono.
 
