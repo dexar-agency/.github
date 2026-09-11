@@ -3,9 +3,12 @@
 # richiede license key sulle organizzazioni). Status check obbligatorio.
 name: guardia-credenziali
 on:
+  # Dal 2026-09-11 (ciclo di rilascio owner-lane): la CI gira UNA volta sullo
+  # SHA candidato, sul branch gate/**; dev e main ricevono lo stesso SHA in
+  # fast-forward e non rilanciano nulla. Trigger dev/main solo dove serve.
   pull_request:
   push:
-    branches: [dev, main]
+    branches: ['gate/**', dev, main]
 permissions:
   contents: read
 jobs:
